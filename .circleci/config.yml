@@ -1,0 +1,47 @@
+version: 2.1
+
+jobs:
+  setup:
+    docker:
+      - image: circleci/ruby:3.3.0-node-browsers
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            gem install bundler
+            bundle install --jobs=4 --retry=3
+      - run:
+          name: Set up database
+          command: |
+            bundle exec rails db:create
+            bundle exec rails db:schema:load
+            bundle exec rails db:seed
+
+  test:
+    docker:
+      - image: circleci/ruby:3.3.0-node-browsers
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            gem install bundler
+            bundle install --jobs=4 --retry=3
+      - run:
+          name: Set up database
+          command: |
+            bundle exec rails db:create
+            bundle exec rails db:schema:load
+      - run:
+          name: Run tests
+          command: bundle exec rails test
+
+workflows:
+  version: 2
+  setup_and_test:
+    jobs:
+      - setup
+      - test:
+          requires:
+            - setup
