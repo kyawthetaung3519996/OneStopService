@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-function CategoryForm({ category = { name: "", image: "" }, headerText, onSubmit, buttonText }) {
+function CategoryForm({ category = { name: "", image: "" }, onSubmit, buttonText, errorMessages }) {
   const [formData, setFormData] = useState({
     name: category.name || "",
     image: category.image || "",
@@ -9,7 +9,6 @@ function CategoryForm({ category = { name: "", image: "" }, headerText, onSubmit
 
   return (
     <div>
-      <h2>{headerText}</h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -21,11 +20,15 @@ function CategoryForm({ category = { name: "", image: "" }, headerText, onSubmit
           <input
             type="text"
             id="name"
-            className="form-control"
+            className={`form-control ${errorMessages ? 'is-invalid' : ''}`}
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            required
           />
+          {errorMessages && (
+            <div className="invalid-feedback">
+              Name {errorMessages.name[0]}
+            </div>
+          )}
         </div>
         <div className="mb-3">
           <label htmlFor="image" className="form-label">Image:</label>
@@ -62,7 +65,6 @@ CategoryForm.propTypes = {
     name: PropTypes.string,
     image: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(File)]),
   }),
-  headerText: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   buttonText: PropTypes.string.isRequired,
 };

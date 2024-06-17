@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import CategoryForm from "./CategoryForm";
 import { objectToFormData } from "../../utils/formDataHelper";
+import NavbarTitle from "../../components/NavbarTitle";
 
 function NewCategoryForm() {
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,7 @@ function NewCategoryForm() {
       await createCategory(formData);
       navigate(`/categories`);
     } catch (e) {
-      setError(`Failed to create category: ${e.message}`);
+      setError(e.message);
     } finally {
       setLoading(false);
     }
@@ -35,14 +36,16 @@ function NewCategoryForm() {
   }
 
   return (
-    <div className="container mt-4">
-      {error && <div className="alert alert-danger">Error: {error}</div>}
-      <CategoryForm
-        headerText="Create a New Category"
-        onSubmit={handleCreateSubmit}
-        buttonText="Add"
-      />
-    </div>
+    <>
+      <NavbarTitle title="Add New Category" />
+      <div className="container-fluid main-content">
+        <CategoryForm
+          onSubmit={handleCreateSubmit}
+          buttonText="Add"
+          errorMessages={error ? JSON.parse(error) : null}
+        />
+      </div>
+    </>
   );
 }
 

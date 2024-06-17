@@ -1,0 +1,111 @@
+#sidebar-wrapper {
+  z-index: 1;
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  overflow-y: auto;
+  background: #021e3f;
+}
+
+#sidebar-wrapper ul li a {
+  color: #fff !important;
+  display: block;
+}
+
+#sidebar-wrapper #main-menu:hover {
+  background: #dbe1e61f;
+}
+
+#sidebar-wrapper #sub-menu li a:hover {
+  font-weight: bold;
+  text-shadow: 3px -3px #000;
+}
+
+#sidebar-wrapper img {
+  border-radius: 10px;
+  width: 90%;
+  display: block;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#sidebar-wrapper .dropup #main-menu {
+  background: #dbe1e61f;
+}
+
+#sidebar-wrapper .dropup #sub-menu {
+  background: #dbe1e61f;
+}
+
+#sidebar-wrapper .fa-sort-down, .fa-caret-left {
+  float: right;
+}
+
+#sidebar-wrapper .dropdown .fa-sort-down {
+  display: none;
+}
+
+#sidebar-wrapper .dropup .fa-caret-left {
+  display: none;
+}
+
+#sub-menu .active a {
+  font-weight: bold;
+}
+
+#main-menu {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+#sub-menu {
+  padding-left: 20px !important;
+}
+
+#sub-menu li {
+  line-height: 30px;
+}
+
+#sub-menu li a {
+  text-decoration: none;
+}
+
+  /*  Auto resize for sidebar to display it */
+@media (max-width: 768px) {
+  #sidebar-wrapper {
+    width: 0;
+  }
+
+  #page-content-wrapper {
+    padding-left: 0 !important;
+  }
+
+  #wrapper.menuDisplayed #sidebar-wrapper {
+    width: 250px;
+    margin-top: 40px;
+  }
+
+  .navbar-wrapper #menu-toggle {
+    display: inline !important;
+    color: white;
+  }
+
+  .navbar-wrapper #fa-arrow {
+    display: none;
+  }
+
+  .navbar-wrapper {
+    left: 0 !important;
+  }
+
+  #wrapper.menuDisplayed .navbar-wrapper #fa-arrow {
+    display: inline;
+  }
+
+  #wrapper.menuDisplayed .navbar-wrapper #fa-bars {
+    display: none;
+  }
+}

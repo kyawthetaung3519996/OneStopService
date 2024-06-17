@@ -22,7 +22,8 @@ async function createCategory(categoryData) {
     body: categoryData,
   });
   if (!response.ok) {
-    throw new Error(response.statusText);
+    const errorMessage = await response.json();
+    throw new Error(JSON.stringify(errorMessage));
   }
   return response.json();
 }
@@ -33,8 +34,9 @@ async function updateCategory(id, categoryData) {
     body: categoryData,
   });
   if (!response.ok) {
-    throw new Error(response.statusText);
-  }
+    const errorMessage = await response.json();
+    throw new Error(JSON.stringify(errorMessage));
+  } 
   return response.json();
 }
 

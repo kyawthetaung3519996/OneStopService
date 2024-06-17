@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { fetchCategory } from "../../services/categoryService";
+import NavbarTitle from "../../components/NavbarTitle";
 
 function CategoryDetails() {
   const [category, setCategory] = useState(null);
@@ -30,22 +31,24 @@ function CategoryDetails() {
   if (error) return <div className="alert alert-danger mt-4">Error: {error}</div>;
 
   return (
-    <div className="container mt-4">
-      <h2>Category Details</h2>
-      {category ? (
-        <>
-          <h3>{category.name}</h3>
-          <div>
-            {category.image_url && (
-              <img src={category.image_url} alt={category.name} className="category-image img-fluid" />
-            )}
-          </div>
-          <Link to="/categories" className="btn btn-primary mt-3">Back</Link>
-        </>
-      ) : (
-        <div className="alert alert-warning mt-4">No category found</div>
-      )}
-    </div>
+    <>
+      <NavbarTitle title="Category Details" />
+      <div className="container-fluid main-content">
+        {category ? (
+          <>
+            <span><b>Name: </b>{category.name}</span>
+            <div>
+              {category.image_url && (
+                <img src={category.image_url} alt={category.name} className="category-image img-fluid" />
+              )}
+            </div>
+            <Link to="/categories" className="btn btn-primary mt-3">Back</Link>
+          </>
+        ) : (
+          <div className="alert alert-warning mt-4">No category found</div>
+        )}
+      </div>
+    </>
   );
 }
 

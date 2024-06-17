@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { fetchCategory, updateCategory } from "../../services/categoryService";
 import CategoryForm from "./CategoryForm";
 import { objectToFormData } from "../../utils/formDataHelper";
+import NavbarTitle from "../../components/NavbarTitle";
 
 function EditCategoryForm() {
   const { id } = useParams();
@@ -20,7 +21,7 @@ function EditCategoryForm() {
         const data = await fetchCategory(id);
         setCategory(data);
       } catch (e) {
-        setError(e.message);
+        setError(e);
       } finally {
         setLoading(false);
       }
@@ -38,7 +39,7 @@ function EditCategoryForm() {
       await updateCategory(id, formData);
       navigate("/categories");
     } catch (e) {
-      setError(`Failed to update category: ${e.message}`);
+      setError(e.message);
     }
   };
 
@@ -51,15 +52,17 @@ function EditCategoryForm() {
   }
 
   return (
-    <div className="container mt-4">
-      {error && <div className="alert alert-danger">Error: {error}</div>}
-      <CategoryForm
-        category={category}
-        headerText="Update a category"
-        onSubmit={handleUpdateSubmit}
-        buttonText="Save"
-      />
-    </div>
+    <>
+      <NavbarTitle title="Update Category" />
+      <div className="container-fluid main-content">
+        <CategoryForm
+          category={category}
+          onSubmit={handleUpdateSubmit}
+          buttonText="Save"
+          errorMessages={error ? JSON.parse(error) : null}
+        />
+      </div>
+    </>
   );
 }
 

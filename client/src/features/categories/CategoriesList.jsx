@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faInfoCircle, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { deleteCategory, fetchAllCategories } from "../../services/categoryService";
+import NavbarTitle from "../../components/NavbarTitle";
 
 function CategoriesList() {
   const [categories, setCategories] = useState([]);
@@ -44,36 +45,49 @@ function CategoriesList() {
   }
 
   return (
-    <div className="container mt-4">
-      <Link to="/categories/new" className="btn btn-outline-primary btn-sm mb-2">ADD CATEGORY</Link>
-      <h2>Categories List</h2>
-      {error && <div className="text-danger mb-3">Error: {error}</div>}
-      {categories.map((category) => (
-        <div key={category.id} className="category-container mb-3 p-3 border rounded">
-          <h3>{category.name}</h3>
-          {category.image_url && (
-            <div>
-              <img src={category.image_url} alt={category.name} className="category-image img-fluid" />
-            </div>
-          )}
-          <div className="mt-2">
-            <Link to={`/categories/${category.id}`} className="btn btn-outline-info btn-sm me-2">
-              <FontAwesomeIcon icon={faInfoCircle} />
-            </Link>
-            <Link to={`/categories/${category.id}/edit`} className="btn btn-outline-warning btn-sm me-2">
-              <FontAwesomeIcon icon={faEdit} />
-            </Link>
-            <button
-              onClick={() => deleteCategoryHandler(category.id)}
-              className="btn btn-outline-danger btn-sm"
-              disabled={deleting}
-            >
-              {deleting ? <FontAwesomeIcon icon={faSpinner} spin /> : <FontAwesomeIcon icon={faTrash} />}
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
+    <>
+      <NavbarTitle title="Categories List" />
+      <div className="container-fluid main-content">
+        <Link to="/categories/new" className="btn btn-outline-primary btn-sm mb-2">ADD CATEGORY</Link>
+        {error && <div className="text-danger mb-3">Error: {error}</div>}
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categories.map((category) => (
+              <tr key={category.id}>
+                <td>{category.name}</td>
+                <td>
+                  {category.image_url && (
+                    <img src={category.image_url} alt={category.name} className="img-fluid" style={{ maxWidth: "100px" }} />
+                  )}
+                </td>
+                <td>
+                  <Link to={`/categories/${category.id}`} className="btn btn-outline-info btn-sm me-2">
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                  </Link>
+                  <Link to={`/categories/${category.id}/edit`} className="btn btn-outline-warning btn-sm me-2">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Link>
+                  <button
+                    onClick={() => deleteCategoryHandler(category.id)}
+                    className="btn btn-outline-danger btn-sm"
+                    disabled={deleting}
+                  >
+                    {deleting ? <FontAwesomeIcon icon={faSpinner} spin /> : <FontAwesomeIcon icon={faTrash} />}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
 
